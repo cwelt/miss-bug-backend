@@ -31,9 +31,8 @@
     },
     {
         "_id": "m3n4o5p6",
-        "title": "Search results inconsistent between pages",
-        "severity": 3,
-        "createdAt": 1712432000000
+        "severity": null,
+        "createdAt": null
     },
     {
         "_id": "q7r8s9t0",
@@ -58,5 +57,17 @@
         "title": "Deployment script ignores environment variables",
         "severity": 4,
         "createdAt": 1712777600000
+    },
+    {
+        "_id": "500qtl",
+        "title": "foo",
+        "severity": 5,
+        "createdAt": 1761821492000
+    },
+    {
+        "_id": "7dW85N",
+        "title": "bar",
+        "severity": 1,
+        "createdAt": 1761821492001
     }
 ]

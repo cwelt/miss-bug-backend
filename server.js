@@ -6,7 +6,7 @@ const app = express();
 const PORT = 3030;
 
 //* ------------------- Bugs Crud -------------------
-//* Read/List
+//* List
 app.get("/api/bug", async (req, res) => {
   try {
     const bugs = await bugService.query();
@@ -14,6 +14,18 @@ app.get("/api/bug", async (req, res) => {
   } catch (err) {
     console.error(`Couldn't get bugs`, err); //loggerService.error(`Couldn't get bugs`, err);
     res.status(400).send(`Couldn't get bugs`);
+  }
+});
+
+//* Read
+app.get("/api/bug/:bugId", async (req, res) => {
+  const { bugId } = req.params;
+  try {
+    const bug = await bugService.getById(bugId);
+    res.send(bug);
+  } catch (err) {
+    console.error(`Couldn't get bug ${bugId}`, err); // loggerService.error(`Couldn't get bug ${bugId}`, err);
+    res.status(400).send(`Couldn't get bug`);
   }
 });
 
@@ -36,7 +48,6 @@ app.get("/api/bug/save", async (req, res) => {
   }
 });
 
-app.get("/api/bug/:bugId", async (req, res) => {});
 app.get("/api/bug/:bugId/remove", async (req, res) => {});
 
 // route for the root path
