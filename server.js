@@ -2,6 +2,14 @@ import express from "express";
 const app = express();
 const PORT = 3030;
 
+app.get("/api/bug", async (req, res) => {
+  res.status(200).send({ msg: "Hello from Miss Bug Backend!" });
+});
+app.get("/api/bug/save", async (req, res) => {});
+app.get("/api/bug/:bugId", async (req, res) => {});
+app.get("/api/bug/:bugId/remove", async (req, res) => {});
+
+// route for the root path
 app.get("/", (req, res) => {
   const header = "<h1>Miss Bug Backend Service</h1>";
   const message = "<h2>This is the backend service for Miss Bug.</h2>";
@@ -28,4 +36,6 @@ app.get("/", (req, res) => {
       `<h3>Response Status:</h3><p>${res.statusCode} ${res.statusMessage}</p>`
   );
 });
+
+// Start the server
 app.listen(PORT, () => console.log(`Server ready at port ${PORT}`));
