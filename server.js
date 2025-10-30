@@ -1,6 +1,21 @@
 import express from "express";
+
+import { bugService } from "./services/bug.service.js";
+
 const app = express();
 const PORT = 3030;
+
+//* ------------------- Bugs Crud -------------------
+//* Read/List
+app.get("/api/bug", async (req, res) => {
+  try {
+    const bugs = await bugService.query();
+    res.send(bugs);
+  } catch (err) {
+    console.error(`Couldn't get bugs`, err); //loggerService.error(`Couldn't get bugs`, err);
+    res.status(400).send(`Couldn't get bugs`);
+  }
+});
 
 app.get("/api/bug", async (req, res) => {
   res.status(200).send({ msg: "Hello from Miss Bug Backend!" });
