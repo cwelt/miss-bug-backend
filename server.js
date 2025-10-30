@@ -44,7 +44,7 @@ app.get("/api/bug/:bugId", async (req, res) => {
     res.send(bug);
   } catch (err) {
     console.error(`Couldn't get bug ${bugId}`, err); // loggerService.error(`Couldn't get bug ${bugId}`, err);
-    res.status(400).send(`Couldn't get bug`);
+    res.status(400).send(`Couldn't get bug with id: ${bugId}`);
   }
 });
 
@@ -53,7 +53,6 @@ app.get("/api/bug/:bugId/remove", async (req, res) => {
   const { bugId } = req.params;
   try {
     await bugService.remove(bugId);
-    // res.redirect('/api/bug')
     res.send(`Bug ${bugId} Removed successfully`);
   } catch (err) {
     console.error(`Couldn't remove bug ${bugId}`, err); // loggerService.error(`Couldn't remove bug ${bugId}`, err);
