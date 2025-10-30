@@ -1,0 +1,23 @@
+{
+  "name": "miss-bug",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cwelt/miss-bug-backend.git"
+  },
+  "author": "chanan welt",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cwelt/miss-bug-backend/issues"
+  },
+  "homepage": "https://github.com/cwelt/miss-bug-backend#readme",
+  "dependencies": {
+    "cookie-parser": "^1.4.7",
+    "express": "^5.1.0"
+  }
+}
