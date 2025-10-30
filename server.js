@@ -17,19 +17,7 @@ app.get("/api/bug", async (req, res) => {
   }
 });
 
-//* Read
-app.get("/api/bug/:bugId", async (req, res) => {
-  const { bugId } = req.params;
-  try {
-    const bug = await bugService.getById(bugId);
-    res.send(bug);
-  } catch (err) {
-    console.error(`Couldn't get bug ${bugId}`, err); // loggerService.error(`Couldn't get bug ${bugId}`, err);
-    res.status(400).send(`Couldn't get bug`);
-  }
-});
-
-//* Add/Update
+//* Create/Update
 app.get("/api/bug/save", async (req, res) => {
   // example request: http://localhost:3030/api/bug/save?_id=500qtl&title=foo&severity=5&createdAt=1761821492000
   const bugToSave = {
@@ -48,7 +36,30 @@ app.get("/api/bug/save", async (req, res) => {
   }
 });
 
-app.get("/api/bug/:bugId/remove", async (req, res) => {});
+//* Read
+app.get("/api/bug/:bugId", async (req, res) => {
+  const { bugId } = req.params;
+  try {
+    const bug = await bugService.getById(bugId);
+    res.send(bug);
+  } catch (err) {
+    console.error(`Couldn't get bug ${bugId}`, err); // loggerService.error(`Couldn't get bug ${bugId}`, err);
+    res.status(400).send(`Couldn't get bug`);
+  }
+});
+
+//* Delete
+app.get("/api/bug/:bugId/remove", async (req, res) => {
+  const { bugId } = req.params;
+  try {
+    await bugService.remove(bugId);
+    // res.redirect('/api/bug')
+    res.send(`Bug ${bugId} Removed successfully`);
+  } catch (err) {
+    console.error(`Couldn't remove bug ${bugId}`, err); // loggerService.error(`Couldn't remove bug ${bugId}`, err);
+    res.status(400).send(`Couldn't remove bug with id: ${bugId}`);
+  }
+});
 
 // route for the root path
 app.get("/", (req, res) => {
