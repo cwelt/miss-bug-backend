@@ -17,10 +17,25 @@ app.get("/api/bug", async (req, res) => {
   }
 });
 
-app.get("/api/bug", async (req, res) => {
-  res.status(200).send({ msg: "Hello from Miss Bug Backend!" });
+//* Add/Update
+app.get("/api/bug/save", async (req, res) => {
+  // example request: http://localhost:3030/api/bug/save?_id=500qtl&title=foo&severity=5&createdAt=1761821492000
+  const bugToSave = {
+    _id: req.query._id,
+    title: req.query.title,
+    severity: +req.query.severity,
+    createdAt: +req.query.createdAt,
+  };
+
+  try {
+    const savedBug = await bugService.save(bugToSave);
+    res.send(savedBug);
+  } catch (err) {
+    console.error(`Couldn't save bug ${bugToSave._id}`, err); // loggerService.error(`Couldn't save bug`, err);
+    res.status(400).send(`Couldn't save bug with id: ${bugToSave._id}`);
+  }
 });
-app.get("/api/bug/save", async (req, res) => {});
+
 app.get("/api/bug/:bugId", async (req, res) => {});
 app.get("/api/bug/:bugId/remove", async (req, res) => {});
 
