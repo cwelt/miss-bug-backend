@@ -28,10 +28,11 @@ app.get("/api/bug", async (req, res) => {
 
 //* Create/Update
 app.get("/api/bug/save", async (req, res) => {
-  // example request: http://localhost:3030/api/bug/save?_id=500qtl&title=foo&severity=5&createdAt=1761821492000
+  // example request: http://localhost:3030/api/bug/save?_id=500qtl&title=foo&severity=5&createdAt=1761821492000&description=bar
   const bugToSave = {
     _id: req.query._id,
     title: req.query.title,
+    description: req.query.description,
     severity: +req.query.severity,
     createdAt: +req.query.createdAt,
   };
