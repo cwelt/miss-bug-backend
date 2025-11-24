@@ -44,7 +44,7 @@ async function save(bugToSave) {
       const bugIdx = bugs.findIndex((bug) => bug._id === bugToSave._id);
       if (bugIdx < 0)
         throw new Error(`Cannot find bug with id '${bugToSave._id}'`);
-      bugs[bugIdx] = bugToSave;
+      bugs[bugIdx] = { ...bugs[bugIdx], ...bugToSave };
     } else {
       bugToSave._id = makeId();
       bugs.push(bugToSave);
