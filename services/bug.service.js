@@ -45,6 +45,7 @@ async function save(bugToSave) {
       if (bugIdx < 0)
         throw new Error(`Cannot find bug with id '${bugToSave._id}'`);
       bugs[bugIdx] = { ...bugs[bugIdx], ...bugToSave };
+      bugToSave = { ...bugs[bugIdx] };
     } else {
       bugToSave._id = makeId();
       bugs.push(bugToSave);
