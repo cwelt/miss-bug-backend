@@ -87,7 +87,7 @@ app.delete("/api/bug/:bugId", async (req, res) => {
   const { bugId } = req.params;
   try {
     await bugService.remove(bugId);
-    res.send(`Bug ${bugId} Removed successfully`);
+    res.status(204).send(`Bug ${bugId} Removed successfully`);
   } catch (err) {
     console.error(`Couldn't remove bug ${bugId}`, err); // loggerService.error(`Couldn't remove bug ${bugId}`, err);
     res.status(400).send(`Couldn't remove bug with id: ${bugId}`);
