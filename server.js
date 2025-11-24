@@ -51,7 +51,6 @@ app.put("/api/bug/:bugId", async (req, res) => {
 
 // * Create
 app.post("/api/bug/", async (req, res) => {
-  console.log(req.body);
   const { title, description, severity, createdAt, labels } = req.body;
 
   try {
@@ -59,9 +58,10 @@ app.post("/api/bug/", async (req, res) => {
       title,
       description,
       severity,
-      createdAt,
-      labels: [...labels],
+      createdAt: createdAt || Date.now(),
+      labels: labels || [],
     };
+    console.log(bugToSave);
     const savedBug = await bugService.save(bugToSave);
     res.status(201).send(savedBug);
   } catch (err) {
