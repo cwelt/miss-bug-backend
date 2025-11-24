@@ -59,7 +59,7 @@ app.get("/api/bug/:bugId", async (req, res) => {
 });
 
 //* Delete
-app.get("/api/bug/:bugId/remove", async (req, res) => {
+app.delete("/api/bug/:bugId", async (req, res) => {
   const { bugId } = req.params;
   try {
     await bugService.remove(bugId);
