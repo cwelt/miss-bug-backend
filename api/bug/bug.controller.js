@@ -3,7 +3,21 @@ import { loggerService } from "../../services/logger.service.js";
 
 export async function getBugs(req, res) {
   // sample query for filtering bugs: {{BASE_URL}}?labels=backend,medium&title=token&severity=2
-  const { title, description, severity, labels, pageIdx } = req.query;
+  // sample query with pagination: {{BASE_URL}}?pageIdx=1
+  // sample query with sorting: {{BASE_URL}}?sortBy=severity&sortDir=-1
+
+  // destructure query params
+  const {
+    title,
+    description,
+    severity,
+    labels,
+    pageIdx,
+    sortBy,
+    sortDir = 1,
+  } = req.query;
+
+  // construct filterBy object
   const filterBy = {
     title,
     description,
@@ -15,7 +29,7 @@ export async function getBugs(req, res) {
   if (pageIdx !== undefined) filterBy.pageIdx = +pageIdx;
 
   try {
-    const bugs = await bugService.query(filterBy);
+    const bugs = await bugService.query(filterBy, sortBy, sortDir);
     res.send(bugs);
   } catch (err) {
     loggerService.error(`Couldn't get bugs`, err);

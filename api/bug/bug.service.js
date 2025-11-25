@@ -15,35 +15,18 @@ export const bugService = {
 const PAGE_SIZE = 4;
 const bugs = readJsonFile("./data/bugs.json");
 
-async function query(filterBy = {}) {
-  let filteredBugs = bugs;
-
+async function query(filterBy = {}, sortBy, sortDir) {
   try {
     // Apply filters
-    if (filterBy.title) {
-      const titleRegex = new RegExp(filterBy.title, "i");
-      filteredBugs = filteredBugs.filter((bug) => titleRegex.test(bug.title));
-    }
-    if (filterBy.description) {
-      const descRegex = new RegExp(filterBy.description, "i");
-      filteredBugs = filteredBugs.filter((bug) =>
-        descRegex.test(bug.description)
-      );
-    }
-    if (filterBy.severity) {
-      filteredBugs = filteredBugs.filter(
-        (bug) => bug.severity >= filterBy.severity
-      );
-    }
-    if (filterBy.labels && filterBy.labels.length > 0) {
-      filteredBugs = filteredBugs.filter((bug) =>
-        filterBy.labels.every((label) => bug.labels.includes(label))
-      );
-    }
+    const filteredBugs = _filterBugs([...bugs], filterBy);
 
-    if (filterBy.pageIdx !== undefined) {
-      const startIdx = filterBy.pageIdx * PAGE_SIZE;
-      filteredBugs = filteredBugs.slice(startIdx, startIdx + PAGE_SIZE);
+    // Apply sorting
+    if (sortBy) {
+      filteredBugs.sort((a, b) => {
+        if (a[sortBy] < b[sortBy]) return -1 * sortDir;
+        if (a[sortBy] > b[sortBy]) return 1 * sortDir;
+        return 0;
+      });
     }
 
     return filteredBugs;
@@ -97,4 +80,40 @@ async function save(bugToSave) {
 
 function _saveBugsToFile() {
   return writeJsonFile("./data/bugs.json", bugs);
+}
+
+function _filterBugs(bugsToFilter, filterBy) {
+  // If no filters, return all bugs
+  if (Object.keys(filterBy).length === 0) return bugsToFilter;
+
+  let filteredBugs = bugsToFilter;
+
+  // Apply filters
+  if (filterBy.title) {
+    const titleRegex = new RegExp(filterBy.title, "i");
+    filteredBugs = filteredBugs.filter((bug) => titleRegex.test(bug.title));
+  }
+  if (filterBy.description) {
+    const descRegex = new RegExp(filterBy.description, "i");
+    filteredBugs = filteredBugs.filter((bug) =>
+      descRegex.test(bug.description)
+    );
+  }
+  if (filterBy.severity) {
+    filteredBugs = filteredBugs.filter(
+      (bug) => bug.severity >= filterBy.severity
+    );
+  }
+  if (filterBy.labels && filterBy.labels.length > 0) {
+    filteredBugs = filteredBugs.filter((bug) =>
+      filterBy.labels.every((label) => bug.labels.includes(label))
+    );
+  }
+
+  if (filterBy.pageIdx !== undefined) {
+    const startIdx = filterBy.pageIdx * PAGE_SIZE;
+    filteredBugs = filteredBugs.slice(startIdx, startIdx + PAGE_SIZE);
+  }
+
+  return filteredBugs;
 }
