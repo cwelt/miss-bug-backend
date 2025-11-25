@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
-
-import { bugService } from "./services/bug.service.js";
+import { bugService } from "./api/bug/bug.service.js";
+import { bugRoutes } from "./api/bug/bug.routes.js";
 
 //* ------------------- Config -------------------
 const app = express();
@@ -15,84 +15,7 @@ const corsOptions = {
 app.use(cors(corsOptions)); // for cross origin allowance
 app.use(express.json()); // for parsing application/json from frontend
 app.use(express.static("public")); // to serve frontend files from the 'public' folder after build
-
-//* ------------------- Bugs Crud -------------------
-//* List
-app.get("/api/bug", async (req, res) => {
-  try {
-    const bugs = await bugService.query();
-    res.send(bugs);
-  } catch (err) {
-    console.error(`Couldn't get bugs`, err); //loggerService.error(`Couldn't get bugs`, err);
-    res.status(400).send(`Couldn't get bugs`);
-  }
-});
-
-//* Update
-app.put("/api/bug/:bugId", async (req, res) => {
-  const { bugId } = req.params;
-  const { title, description, severity, labels } = req.body;
-  const bugToSave = {
-    _id: bugId,
-    title,
-    description,
-    severity,
-    labels: [...labels],
-  };
-
-  try {
-    const savedBug = await bugService.save(bugToSave);
-    res.send(savedBug);
-  } catch (err) {
-    console.error(`Couldn't save bug ${bugToSave._id}`, err); // loggerService.error(`Couldn't save bug`, err);
-    res.status(400).send(`Couldn't save bug with id: ${bugToSave._id}`);
-  }
-});
-
-// * Create
-app.post("/api/bug/", async (req, res) => {
-  const { title, description, severity, createdAt, labels } = req.body;
-
-  try {
-    const bugToSave = {
-      title,
-      description,
-      severity,
-      createdAt: createdAt || Date.now(),
-      labels: labels || [],
-    };
-    console.log(bugToSave);
-    const savedBug = await bugService.save(bugToSave);
-    res.status(201).send(savedBug);
-  } catch (err) {
-    console.error(`Couldn't save bug ${bugToSave._id}`, err); // loggerService.error(`Couldn't save bug`, err);
-    res.status(400).send(`Couldn't save bug with id: ${bugToSave._id}`);
-  }
-});
-
-//* Read
-app.get("/api/bug/:bugId", async (req, res) => {
-  const { bugId } = req.params;
-  try {
-    const bug = await bugService.getById(bugId);
-    res.send(bug);
-  } catch (err) {
-    console.error(`Couldn't get bug ${bugId}`, err); // loggerService.error(`Couldn't get bug ${bugId}`, err);
-    res.status(400).send(`Couldn't get bug with id: ${bugId}`);
-  }
-});
-
-//* Delete
-app.delete("/api/bug/:bugId", async (req, res) => {
-  const { bugId } = req.params;
-  try {
-    await bugService.remove(bugId);
-    res.status(204).send(`Bug ${bugId} Removed successfully`);
-  } catch (err) {
-    console.error(`Couldn't remove bug ${bugId}`, err); // loggerService.error(`Couldn't remove bug ${bugId}`, err);
-    res.status(400).send(`Couldn't remove bug with id: ${bugId}`);
-  }
-});
+app.use("/api/bug", bugRoutes); // for bug routes
 
 // route for the root path
 app.get("/", (req, res) => {
