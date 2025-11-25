@@ -17,6 +17,7 @@ app.use(cors(corsOptions)); // for cross origin allowance
 app.use(express.json()); // for parsing application/json from frontend
 app.use(express.static("public")); // to serve frontend files from the 'public' folder after build
 app.use("/api/bug", bugRoutes); // for bug routes
+app.set("query parser", "extended"); // to allow nested objects in query params
 
 // route for the root path
 app.get("/", (req, res) => {
