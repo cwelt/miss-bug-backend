@@ -1,4 +1,8 @@
-import { makeId, readJsonFile, writeJsonFile } from "./utils.service.js";
+import {
+  makeId,
+  readJsonFile,
+  writeJsonFile,
+} from "../../services/utils.service.js";
 
 export const bugService = {
   query,
@@ -44,7 +48,8 @@ async function save(bugToSave) {
       const bugIdx = bugs.findIndex((bug) => bug._id === bugToSave._id);
       if (bugIdx < 0)
         throw new Error(`Cannot find bug with id '${bugToSave._id}'`);
-      bugs[bugIdx] = bugToSave;
+      bugs[bugIdx] = { ...bugs[bugIdx], ...bugToSave };
+      bugToSave = { ...bugs[bugIdx] };
     } else {
       bugToSave._id = makeId();
       bugs.push(bugToSave);
