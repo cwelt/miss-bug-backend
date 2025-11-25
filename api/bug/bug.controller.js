@@ -1,10 +1,18 @@
 import { bugService } from "./bug.service.js";
 import { loggerService } from "../../services/logger.service.js";
 
-// list all bugs
 export async function getBugs(req, res) {
+  // sample query for filtering bugs: {{BASE_URL}}?labels=backend,medium&title=token&severity=2
+  const { title, description, severity, labels } = req.query;
+  const filterBy = {
+    title,
+    description,
+    severity: +severity,
+    labels: labels ? labels.split(",") : [],
+  };
+
   try {
-    const bugs = await bugService.query();
+    const bugs = await bugService.query(filterBy);
     res.send(bugs);
   } catch (err) {
     loggerService.error(`Couldn't get bugs`, err);
