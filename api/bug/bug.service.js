@@ -1,3 +1,4 @@
+import { loggerService } from "../../services/logger.service.js";
 import {
   makeId,
   readJsonFile,
@@ -14,8 +15,26 @@ export const bugService = {
 const bugs = readJsonFile("./data/bugs.json");
 
 async function query(filterBy = {}) {
+  let filteredBugs = bugs;
+
   try {
-    return bugs;
+    // Apply filters
+    if (filterBy.title) {
+      const titleRegex = new RegExp(filterBy.title, "i");
+      filteredBugs = filteredBugs.filter((bug) => titleRegex.test(bug.title));
+    }
+    if (filterBy.severity) {
+      filteredBugs = filteredBugs.filter(
+        (bug) => bug.severity >= filterBy.severity
+      );
+    }
+    if (filterBy.labels && filterBy.labels.length > 0) {
+      filteredBugs = filteredBugs.filter((bug) =>
+        filterBy.labels.every((label) => bug.labels.includes(label))
+      );
+    }
+
+    return filteredBugs;
   } catch (err) {
     throw err;
   }
@@ -27,6 +46,7 @@ async function getById(bugId) {
     if (!bug) throw new Error(`Cannot find bug with id '${bugId}'`);
     return bug;
   } catch (err) {
+    loggerService.error(`Couldn't get cars`, err);
     throw err;
   }
 }
@@ -38,6 +58,7 @@ async function remove(bugId) {
     bugs.splice(bugIdx, 1);
     await _saveBugsToFile();
   } catch (err) {
+    loggerService.error(`Couldn't remove bug with id '${bugId}'`, err);
     throw err;
   }
 }
@@ -57,6 +78,7 @@ async function save(bugToSave) {
     await _saveBugsToFile();
     return bugToSave;
   } catch (err) {
+    loggerService.error(`Couldn't save bug with id '${bugToSave._id}'`, err);
     throw err;
   }
 }
