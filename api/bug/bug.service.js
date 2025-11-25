@@ -23,6 +23,12 @@ async function query(filterBy = {}) {
       const titleRegex = new RegExp(filterBy.title, "i");
       filteredBugs = filteredBugs.filter((bug) => titleRegex.test(bug.title));
     }
+    if (filterBy.description) {
+      const descRegex = new RegExp(filterBy.description, "i");
+      filteredBugs = filteredBugs.filter((bug) =>
+        descRegex.test(bug.description)
+      );
+    }
     if (filterBy.severity) {
       filteredBugs = filteredBugs.filter(
         (bug) => bug.severity >= filterBy.severity
