@@ -12,6 +12,7 @@ export const bugService = {
   save,
 };
 
+const PAGE_SIZE = 4;
 const bugs = readJsonFile("./data/bugs.json");
 
 async function query(filterBy = {}) {
@@ -38,6 +39,11 @@ async function query(filterBy = {}) {
       filteredBugs = filteredBugs.filter((bug) =>
         filterBy.labels.every((label) => bug.labels.includes(label))
       );
+    }
+
+    if (filterBy.pageIdx !== undefined) {
+      const startIdx = filterBy.pageIdx * PAGE_SIZE;
+      filteredBugs = filteredBugs.slice(startIdx, startIdx + PAGE_SIZE);
     }
 
     return filteredBugs;

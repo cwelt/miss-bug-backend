@@ -3,13 +3,16 @@ import { loggerService } from "../../services/logger.service.js";
 
 export async function getBugs(req, res) {
   // sample query for filtering bugs: {{BASE_URL}}?labels=backend,medium&title=token&severity=2
-  const { title, description, severity, labels } = req.query;
+  const { title, description, severity, labels, pageIdx } = req.query;
   const filterBy = {
     title,
     description,
     severity: +severity,
     labels: labels ? labels.split(",") : [],
   };
+
+  // set pageIdx for pagination only if it explicitly provided
+  if (pageIdx !== undefined) filterBy.pageIdx = +pageIdx;
 
   try {
     const bugs = await bugService.query(filterBy);
