@@ -1,4 +1,5 @@
 import { bugService } from "./bug.service.js";
+import { loggerService } from "../../services/logger.service.js";
 
 // list all bugs
 export async function getBugs(req, res) {
@@ -6,7 +7,7 @@ export async function getBugs(req, res) {
     const bugs = await bugService.query();
     res.send(bugs);
   } catch (err) {
-    console.error(`Couldn't get bugs`, err); //loggerService.error(`Couldn't get bugs`, err);
+    loggerService.error(`Couldn't get bugs`, err);
     res.status(400).send(`Couldn't get bugs`);
   }
 }
@@ -17,7 +18,7 @@ export async function getBug(req, res) {
     const bug = await bugService.getById(bugId);
     res.send(bug);
   } catch (err) {
-    console.error(`Couldn't get bug ${bugId}`, err); // loggerService.error(`Couldn't get bug ${bugId}`, err);
+    loggerService.error(`Couldn't get bug ${bugId}`, err);
     res.status(400).send(`Couldn't get bug with id: ${bugId}`);
   }
 }
@@ -28,7 +29,7 @@ export async function removeBug(req, res) {
     await bugService.remove(bugId);
     res.status(204).send(`Bug ${bugId} Removed successfully`);
   } catch (err) {
-    console.error(`Couldn't remove bug ${bugId}`, err); // loggerService.error(`Couldn't remove bug ${bugId}`, err);
+    loggerService.error(`Couldn't remove bug ${bugId}`, err);
     res.status(400).send(`Couldn't remove bug with id: ${bugId}`);
   }
 }
@@ -44,11 +45,10 @@ export async function createBug(req, res) {
       createdAt: createdAt || Date.now(),
       labels: labels || [],
     };
-    console.log(bugToSave);
     const savedBug = await bugService.save(bugToSave);
     res.status(201).send(savedBug);
   } catch (err) {
-    console.error(`Couldn't save bug ${bugToSave._id}`, err); // loggerService.error(`Couldn't save bug`, err);
+    loggerService.error(`Couldn't save bug ${bugToSave._id}`, err);
     res.status(400).send(`Couldn't save bug with id: ${bugToSave._id}`);
   }
 }
@@ -68,7 +68,7 @@ export async function updateBug(req, res) {
     const savedBug = await bugService.save(bugToSave);
     res.send(savedBug);
   } catch (err) {
-    console.error(`Couldn't save bug ${bugToSave._id}`, err); // loggerService.error(`Couldn't save bug`, err);
+    loggerService.error(`Couldn't save bug ${bugToSave._id}`, err);
     res.status(400).send(`Couldn't save bug with id: ${bugToSave._id}`);
   }
 }
