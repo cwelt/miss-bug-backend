@@ -1,0 +1,72 @@
+[
+    {
+        "_id": "u101",
+        "fullname": "Muki Ja",
+        "username": "muki",
+        "password": "muki1234",
+        "score": 100
+    },
+    {
+        "_id": "u102",
+        "fullname": "Asha Patel",
+        "username": "ashap",
+        "password": "ashap1234",
+        "score": 85
+    },
+    {
+        "_id": "u103",
+        "fullname": "Diego Ramos",
+        "username": "dramos",
+        "password": "dramos1234",
+        "score": 72
+    },
+    {
+        "_id": "u104",
+        "fullname": "Lina Chen",
+        "username": "linac",
+        "password": "linac1234",
+        "score": 91
+    },
+    {
+        "_id": "u105",
+        "fullname": "Omar Rahman",
+        "username": "omarr",
+        "password": "omarr1234",
+        "score": 67
+    },
+    {
+        "_id": "u106",
+        "fullname": "Sofia Müller",
+        "username": "sofiam",
+        "password": "sofiam1234",
+        "score": 78
+    },
+    {
+        "_id": "u107",
+        "fullname": "Jacob Lee",
+        "username": "jacobl",
+        "password": "jacobl1234",
+        "score": 54
+    },
+    {
+        "_id": "u108",
+        "fullname": "Priya Singh",
+        "username": "priyas",
+        "password": "priyas1234",
+        "score": 88
+    },
+    {
+        "_id": "u109",
+        "fullname": "Ethan Brooks",
+        "username": "ethanb",
+        "password": "ethanb1234",
+        "score": 95
+    },
+    {
+        "_id": "u110",
+        "fullname": "Maya Kaur",
+        "username": "mayak",
+        "password": "mayak1234",
+        "score": 80
+    }
+]
