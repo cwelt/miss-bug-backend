@@ -1,8 +1,9 @@
 import express from "express";
 import cors from "cors";
 import path from "path";
-import { bugService } from "./api/bug/bug.service.js";
 import { bugRoutes } from "./api/bug/bug.routes.js";
+import { bugService } from "./api/bug/bug.service.js";
+import { loggerService } from "./services/logger.service.js";
 
 //* ------------------- Config -------------------
 const app = express();
@@ -53,4 +54,6 @@ app.get("/*Other", (req, res) => {
 });
 
 // Start the server
-app.listen(PORT, () => console.log(`Server ready at port ${PORT}`));
+app.listen(PORT, () =>
+  loggerService.info(`Server ready on http://localhost:${PORT}/`)
+);
