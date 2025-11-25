@@ -39,6 +39,26 @@ export async function getBugs(req, res) {
 
 export async function getBug(req, res) {
   const { bugId } = req.params;
+  const visitedBugs = req.cookies?.visitedBugs
+    ? JSON.parse(req.cookies.visitedBugs)
+    : [];
+
+  // assert bug visit limit is not exceeded
+  if (!visitedBugs.includes(bugId)) {
+    if (visitedBugs.length < 3) visitedBugs.push(bugId);
+    else {
+      return res
+        .status(403)
+        .send("Cannot visit more than 3 bugs within 1 minute.");
+    }
+  }
+
+  // set cookie with updated visited bugs & updated expiry time
+  res.cookie("visitedBugs", JSON.stringify(visitedBugs), {
+    httpOnly: true,
+    maxAge: 60 * 1000, // 60 seconds
+  });
+
   try {
     const bug = await bugService.getById(bugId);
     res.send(bug);

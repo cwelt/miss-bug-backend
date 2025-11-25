@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import path from "path";
+import cookieParser from "cookie-parser";
 import { bugRoutes } from "./api/bug/bug.routes.js";
 import { bugService } from "./api/bug/bug.service.js";
 import { loggerService } from "./services/logger.service.js";
@@ -16,6 +17,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions)); // for cross origin allowance
 app.use(express.json()); // for parsing application/json from frontend
+app.use(cookieParser()); // for parsing cookies
 app.use(express.static("public")); // to serve frontend files from the 'public' folder after build
 app.use("/api/bug", bugRoutes); // for bug routes
 app.set("query parser", "extended"); // to allow nested objects in query params

@@ -1,0 +1,122 @@
+[
+    {
+        "_id": "abc123",
+        "title": "Cannot save a Car",
+        "description": "problem when clicking Save",
+        "severity": 0,
+        "createdAt": 1542107359454,
+        "labels": [
+            "critical",
+            "need-CR",
+            "dev-branch"
+        ]
+    },
+    {
+        "_id": "def456",
+        "title": "UI freezes on search",
+        "description": "application becomes unresponsive after typing 3 characters in the search box",
+        "severity": 4,
+        "createdAt": 1542791559454,
+        "labels": [
+            "high",
+            "frontend",
+            "needs-investigation"
+        ]
+    },
+    {
+        "_id": "gh7890",
+        "title": "Incorrect total in invoice",
+        "description": "invoice total calculation excludes discounts for some items",
+        "severity": 5,
+        "createdAt": 1543379959454,
+        "labels": [
+            "critical",
+            "billing",
+            "regression"
+        ]
+    },
+    {
+        "_id": "ij1011",
+        "title": "Login token expires early",
+        "description": "session token invalidates after 5 minutes instead of 30",
+        "severity": 3,
+        "createdAt": 1544054359454,
+        "labels": [
+            "auth",
+            "medium",
+            "backend"
+        ]
+    },
+    {
+        "_id": "kl1213",
+        "title": "Image upload corrupts file",
+        "description": "uploaded PNGs become unreadable on certain resolutions",
+        "severity": 4,
+        "createdAt": 1544638759454,
+        "labels": [
+            "high",
+            "media",
+            "needs-CR"
+        ]
+    },
+    {
+        "_id": "mn1415",
+        "title": "Notification email missing link",
+        "description": "password reset email does not include the reset link for some users",
+        "severity": 2,
+        "createdAt": 1545223159454,
+        "labels": [
+            "low",
+            "email",
+            "ux"
+        ]
+    },
+    {
+        "_id": "op1617",
+        "title": "Slow response on dashboard",
+        "description": "dashboard API call takes >10s when user has >1k entries",
+        "severity": 3,
+        "createdAt": 1545807559454,
+        "labels": [
+            "performance",
+            "backend",
+            "investigate"
+        ]
+    },
+    {
+        "_id": "qr1819",
+        "title": "Export CSV encodes incorrectly",
+        "description": "CSV export uses wrong character encoding for special characters",
+        "severity": 2,
+        "createdAt": 1546391959454,
+        "labels": [
+            "low",
+            "export",
+            "frontend"
+        ]
+    },
+    {
+        "_id": "st2021",
+        "title": "Mobile layout broken on iPhone SE",
+        "description": "header overlaps content on small-screen devices",
+        "severity": 1,
+        "createdAt": 1546976359454,
+        "labels": [
+            "ui",
+            "mobile",
+            "needs-design"
+        ]
+    },
+    {
+        "_id": "uv2223",
+        "title": "Race condition saving settings",
+        "description": "concurrent saves occasionally revert to previous values",
+        "severity": 4,
+        "createdAt": 1547560759454,
+        "labels": [
+            "critical",
+            "concurrency",
+            "backend"
+        ]
+    }
+]
