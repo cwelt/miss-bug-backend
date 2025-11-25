@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import path from "path";
 import { bugService } from "./api/bug/bug.service.js";
 import { bugRoutes } from "./api/bug/bug.routes.js";
 
@@ -43,6 +44,11 @@ app.get("/", (req, res) => {
       responseHeadersList +
       `<h3>Response Status:</h3><p>${res.statusCode} ${res.statusMessage}</p>`
   );
+});
+
+// fallback route for handling all other paths (serving index.html for SPA)
+app.get("/*Other", (req, res) => {
+  res.sendFile(path.resolve("public", "index.html"));
 });
 
 // Start the server
